@@ -1,0 +1,946 @@
+CREATE SCHEMA asm1;
+USE asm1;
+
+-- CREATE TABLES
+
+-- CREATE TABLE TEAM
+CREATE TABLE TEAM
+	(TeamID INT PRIMARY KEY,
+     Team_Name VARCHAR(50)
+     );
+     
+-- CREATE TABLE ROOM
+CREATE TABLE ROOM
+	(Room_Number INT PRIMARY KEY,
+	 Number_Of_People INT NOT NULL, 
+     Need TEXT
+     );
+
+-- CREATE TABLE ATHLETE
+CREATE TABLE ATHLETE
+	(AthleteID INT PRIMARY KEY,
+     Athlete_Name VARCHAR(50) NOT NULL,
+     Nationality VARCHAR(50) NOT NULL,
+     Age INT NOT NULL,
+     TeamID INT,
+     Room_Number INT,
+     FOREIGN KEY (TeamID) REFERENCES TEAM(TeamID),
+     FOREIGN KEY (Room_Number) REFERENCES ROOM(Room_Number)
+     );
+   
+-- CREATE TABLE VENUE
+CREATE TABLE VENUE
+	(VenueID INT PRIMARY KEY,
+     Venue_Name VARCHAR(50) NOT NULL,
+     Venue_Location TEXT
+     );
+   
+-- CREATE TABLE SPORT
+CREATE TABLE SPORT
+	(Sport_Code INT PRIMARY KEY,
+     Sport_Name VARCHAR(50) NOT NULL
+     );
+     
+-- CREATE TABLE EQUIPMENT
+CREATE TABLE EQUIPMENT
+	(Equipment_Number INT PRIMARY KEY,
+     Equipment_Name VARCHAR(50) NOT NULL,
+     Inventory_Level INT,
+     Distribution INT,
+     Maintenance_schedule TEXT, 
+     Sport_Code INT, 
+     FOREIGN KEY (Sport_Code) REFERENCES SPORT(Sport_Code),
+     FOREIGN KEY (Distribution) REFERENCES VENUE(VenueID)
+     );
+   
+-- CREATE TABLE EVENT
+CREATE TABLE EVENT
+	(Event_Code INT PRIMARY KEY,
+     Event_Name VARCHAR(50) NOT NULL,
+     Date_Time DATETIME,
+     Sport_Code INT,
+     VenueID INT,
+     FOREIGN KEY (Sport_Code) REFERENCES SPORT(Sport_Code),
+     FOREIGN KEY (VenueID) REFERENCES VENUE(VenueID)
+     );
+     
+-- CREATE TABLE PARTICIPATION
+CREATE TABLE PARTICIPATION
+	(AthleteID INT,
+     Event_Code INT,
+     PRIMARY KEY (AthleteID, Event_Code),
+     FOREIGN KEY (AthleteID) REFERENCES ATHLETE(AthleteID),
+     FOREIGN KEY (Event_Code) REFERENCES EVENT(Event_Code)
+     );
+     
+-- CREATE TABLE VOLUNTEER
+CREATE TABLE VOLUNTEER
+	(VolunteerID INT PRIMARY KEY,
+     Volunteer_Name VARCHAR(50) NOT NULL,
+     Role VARCHAR(50)
+     );
+
+-- CREATE TABLE TRAINING
+CREATE TABLE TRAINING
+	(Event_Code INT,
+	 VolunteerID INT,
+     Training_DateTime DATETIME,
+     PRIMARY KEY (Event_Code, VolunteerID),
+     FOREIGN KEY (Event_Code) REFERENCES EVENT(Event_Code),
+     FOREIGN KEY (VolunteerID) REFERENCES VOLUNTEER(VolunteerID)
+     );
+   
+-- INSERT RECORDS INTO TEAM TABLE
+INSERT INTO TEAM VALUES (1, 'Meca');
+INSERT INTO TEAM VALUES (2, 'Stesh Lenik');
+INSERT INTO TEAM VALUES (3, 'Breadian');
+INSERT INTO TEAM VALUES (4, 'Kesa Taris');
+INSERT INTO TEAM VALUES (5, 'Tom Quan');
+INSERT INTO TEAM VALUES (6, 'Gajag Nyjah');
+INSERT INTO TEAM VALUES (7, 'Jaca Leon');
+INSERT INTO TEAM VALUES (8, 'Kaka Sumre');
+INSERT INTO TEAM VALUES (9, 'Carno');
+INSERT INTO TEAM VALUES (10, 'Coary Iga');
+INSERT INTO TEAM VALUES (11, 'Chrisry Monshan');
+INSERT INTO TEAM VALUES (12, 'Janoah Sydsha');
+INSERT INTO TEAM VALUES (13, 'Roxan Scot');
+INSERT INTO TEAM VALUES (14, 'Nelli');
+INSERT INTO TEAM VALUES (15, 'Mida');
+INSERT INTO TEAM VALUES (16, 'Resim Hashikay');
+INSERT INTO TEAM VALUES (17, 'Kyliam');
+
+-- INSERT RECORDS INTO ROOM TABLE
+INSERT INTO ROOM VALUES (1, 2, 'Protein Powder');
+INSERT INTO ROOM VALUES (2, 1, 'Pillows');
+INSERT INTO ROOM VALUES (3, 1, 'Mattress');
+INSERT INTO ROOM VALUES (4, 5, 'Espresso');
+INSERT INTO ROOM VALUES (5, 2, 'Reading area');
+INSERT INTO ROOM VALUES (6, 1, 'Air conditioner');
+INSERT INTO ROOM VALUES (7, 4, 'Fan');
+INSERT INTO ROOM VALUES (8, 1, 'Hot water');
+INSERT INTO ROOM VALUES (9, 1, 'Cold water');
+INSERT INTO ROOM VALUES (10, 1, 'Mirror');
+INSERT INTO ROOM VALUES (11, 1, 'Toiletries storage');
+INSERT INTO ROOM VALUES (12, 1, 'Desk');
+INSERT INTO ROOM VALUES (13, 1, 'Chair');
+INSERT INTO ROOM VALUES (14, 1, 'Lamp');
+INSERT INTO ROOM VALUES (15, 2, 'Internet');
+INSERT INTO ROOM VALUES (16, 1, 'Laptops');
+INSERT INTO ROOM VALUES (17, 1, 'Tablets');
+INSERT INTO ROOM VALUES (18, 1, 'Hair dryer');
+INSERT INTO ROOM VALUES (19, 1, 'Towels');
+INSERT INTO ROOM VALUES (20, 2, 'Fridge');
+INSERT INTO ROOM VALUES (21, 3, 'Television');
+INSERT INTO ROOM VALUES (22, 6, 'Board games');
+INSERT INTO ROOM VALUES (23, 1, 'Water');
+INSERT INTO ROOM VALUES (24, 1, 'Coffee');
+INSERT INTO ROOM VALUES (25, 1, 'Magazines');
+INSERT INTO ROOM VALUES (26, 1, 'Books');
+INSERT INTO ROOM VALUES (27, 1, 'Hot water');
+INSERT INTO ROOM VALUES (28, 1, 'Blanket');
+INSERT INTO ROOM VALUES (29, 1, 'Bookshelf');
+INSERT INTO ROOM VALUES (30, 1, 'Secure storage');
+INSERT INTO ROOM VALUES (31, 1, 'Towels');
+INSERT INTO ROOM VALUES (32, 1, 'Protein bars');
+INSERT INTO ROOM VALUES (33, 3, 'Snacks');
+INSERT INTO ROOM VALUES (34, 1, 'Television');
+INSERT INTO ROOM VALUES (35, 1, 'Laptops');
+INSERT INTO ROOM VALUES (36, 1, 'Tablets');
+INSERT INTO ROOM VALUES (37, 1, 'Pillows');
+INSERT INTO ROOM VALUES (38, 2, 'Clean towels');
+INSERT INTO ROOM VALUES (39, 1, 'Energy drinks');
+INSERT INTO ROOM VALUES (40, 1, 'Snacks');
+INSERT INTO ROOM VALUES (41, 1, 'Water');
+INSERT INTO ROOM VALUES (42, 1, 'First aid kit');
+INSERT INTO ROOM VALUES (43, 1, 'Mirror');
+INSERT INTO ROOM VALUES (44, 1, 'Desk');
+INSERT INTO ROOM VALUES (45, 1, 'Couch');
+INSERT INTO ROOM VALUES (46, 3, 'Board games');
+INSERT INTO ROOM VALUES (47, 4, 'Energy food');
+INSERT INTO ROOM VALUES (48, 1, 'Bed');
+INSERT INTO ROOM VALUES (49, 1, 'Pillows');
+INSERT INTO ROOM VALUES (50, 2, '2 beds');
+INSERT INTO ROOM VALUES (51, 3, '3 beds');
+INSERT INTO ROOM VALUES (52, 5, 'Relaxing area');
+INSERT INTO ROOM VALUES (53, 4, 'Common area');
+INSERT INTO ROOM VALUES (54, 1, 'Water');
+INSERT INTO ROOM VALUES (55, 1, 'Coffee');
+INSERT INTO ROOM VALUES (56, 1, 'Tea');
+INSERT INTO ROOM VALUES (57, 1, 'Towels');
+INSERT INTO ROOM VALUES (58, 1, 'Lamp');
+INSERT INTO ROOM VALUES (59, 1, 'Yoga mat');
+INSERT INTO ROOM VALUES (60, 1, 'Diffusers');
+INSERT INTO ROOM VALUES (61, 1, 'Candles');
+INSERT INTO ROOM VALUES (62, 1, 'Energy drinks');
+INSERT INTO ROOM VALUES (63, 2, 'Protein bars');
+INSERT INTO ROOM VALUES (64, 1, 'Snacks');
+INSERT INTO ROOM VALUES (65, 1, '4 pillows');
+INSERT INTO ROOM VALUES (66, 1, 'Shampoo');
+INSERT INTO ROOM VALUES (67, 1, 'Shower gel');
+INSERT INTO ROOM VALUES (68, 1, 'Flowers');
+
+-- INSERT RECORDS INTO ATHLETE TABLE
+INSERT INTO ATHLETE VALUES (1, 'Mete Gazoz', 'Turkey', 24, 1, 1);
+INSERT INTO ATHLETE VALUES (2, 'Casey Kaufhold', 'United States', 20, 1, 1);
+INSERT INTO ATHLETE VALUES (3, 'Bill May', 'United States', 45, NULL, 2);
+INSERT INTO ATHLETE VALUES (4, 'Viktor Axelsen', 'Denmark', 30, NULL, 3);
+INSERT INTO ATHLETE VALUES (5, 'Stephen Curry', 'United States', 36, 2, 4);
+INSERT INTO ATHLETE VALUES (6, 'Shai Gilgeous - Alexander', 'Canada', 25, 2, 4);
+INSERT INTO ATHLETE VALUES (7, 'LeBron James', 'United States', 39, 2, 4);
+INSERT INTO ATHLETE VALUES (8, 'Nikola Jokic', 'Serbia', 29, 2, 4);
+INSERT INTO ATHLETE VALUES (9, 'Breanna Stewart', 'United States', 29, 3, 5);
+INSERT INTO ATHLETE VALUES (10, 'Diana Taurasi', 'United States', 41, 3, 5);
+INSERT INTO ATHLETE VALUES (11, 'Victor Wembanyama', 'France', 20, 2, 4);
+INSERT INTO ATHLETE VALUES (12, 'Jimmer Fredette', 'United States', 35, NULL, 6);
+INSERT INTO ATHLETE VALUES (13, 'Kelly Cheng', 'United States', 28, 4, 7);
+INSERT INTO ATHLETE VALUES (14, 'Sara Hughes', 'United States', 29, 4, 7);
+INSERT INTO ATHLETE VALUES (15, 'Taryn Kloth', 'United States', 26, 4, 7);
+INSERT INTO ATHLETE VALUES (16, 'Kristen Nuss', 'United States', 26, 4, 7);
+INSERT INTO ATHLETE VALUES (17, 'Jahmal Harvey', 'United States', 21, NULL, 8);
+INSERT INTO ATHLETE VALUES (18, 'Victor Montalvo', 'United States', 29, NULL, 9);
+INSERT INTO ATHLETE VALUES (19, 'Dominika Banevic', 'Lithuania', 16, NULL, 10);
+INSERT INTO ATHLETE VALUES (20, 'Nevin Harrison', 'United States', 21, NULL, 11);
+INSERT INTO ATHLETE VALUES (21, 'Joe Clarke', 'Great Britain', 31, NULL, 12);
+INSERT INTO ATHLETE VALUES (22, 'Hannah Roberts', 'United States', 22, NULL, 13);
+INSERT INTO ATHLETE VALUES (23, 'Jennifer Valente', 'United States', 29, NULL, 14);
+INSERT INTO ATHLETE VALUES (24, 'Tom Daley', 'Great Britain', 29, 5, 15);
+INSERT INTO ATHLETE VALUES (25, 'Quan Hongchan', 'China', 17, 5, 15);
+INSERT INTO ATHLETE VALUES (26, 'Ben Maher', 'Great Britain', 41, NULL, 16);
+INSERT INTO ATHLETE VALUES (27, 'Lee Kiefer', 'United States', 29, NULL, 17);
+INSERT INTO ATHLETE VALUES (28, 'Nick Itkin', 'United States', 24, NULL, 18);
+INSERT INTO ATHLETE VALUES (29, 'Harmanpreet Singh', 'India', 28, NULL, 19);
+INSERT INTO ATHLETE VALUES (30, 'Nelly Korda', 'United States', 25, 14, 20);
+INSERT INTO ATHLETE VALUES (31, 'Rory Mcllroy', 'Ireland', 34, 13, 21);
+INSERT INTO ATHLETE VALUES (32, 'Xander Schauffele', 'United States', 30, 13, 21);
+INSERT INTO ATHLETE VALUES (33, 'Scottie Scheffler', 'United States', 27, 13, 21);
+INSERT INTO ATHLETE VALUES (34, 'Lilia Vu', 'United States', 26, 14, 20);
+INSERT INTO ATHLETE VALUES (35, 'Rebeca Andrade', 'Brazil', 24, 16, 22);
+INSERT INTO ATHLETE VALUES (36, 'Simone Biles', 'United States', 27, 16, 22);
+INSERT INTO ATHLETE VALUES (37, 'Hashimoto Daiki', 'Japan', 22, 16, 22);
+INSERT INTO ATHLETE VALUES (38, 'Shilese Jones', 'United States', 21, 16, 22);
+INSERT INTO ATHLETE VALUES (39, 'Kaylia Nemour', 'Algeria', 17, 16, 22);
+INSERT INTO ATHLETE VALUES (40, 'Fred Richard', 'United States', 19, 16, 22);
+INSERT INTO ATHLETE VALUES (41, 'Nikola Karabatic', 'France', 40, NULL, 23);
+INSERT INTO ATHLETE VALUES (42, 'Teddy Riner', 'France', 35, NULL, 24);
+INSERT INTO ATHLETE VALUES (43, 'Joe Choong', 'Great Britain', 28, NULL, 25);
+INSERT INTO ATHLETE VALUES (44, 'Darja Varfolomeev', 'Germany', 17, NULL, 26);
+INSERT INTO ATHLETE VALUES (45, 'Oliver Zeidler', 'Germany', 27, NULL, 27);
+INSERT INTO ATHLETE VALUES (46, 'Kara Kohler', 'United States', 33, NULL, 28);
+INSERT INTO ATHLETE VALUES (47, 'Ilona Maher', 'United States', 27, NULL, 29);
+INSERT INTO ATHLETE VALUES (48, 'Perry Baker', 'United States', 37, NULL, 30);
+INSERT INTO ATHLETE VALUES (49, 'Eleanor Aldridge', 'Great Britain', 27, NULL, 31);
+INSERT INTO ATHLETE VALUES (50, 'Vincent Hancock', 'United States', 35, NULL, 32);
+INSERT INTO ATHLETE VALUES (51, 'Gavin Bottger', 'United States', 17, 6, 33);
+INSERT INTO ATHLETE VALUES (52, 'Sky Brown', 'Great Britain', 15, NULL, 34);
+INSERT INTO ATHLETE VALUES (53, 'Jagger Eaton', 'United States', 23, 6, 33);
+INSERT INTO ATHLETE VALUES (54, 'Nyjah Huston', 'United States', 29, 6, 33);
+INSERT INTO ATHLETE VALUES (55, 'Paxten Aaronson', 'United States', 20, NULL, 35);
+INSERT INTO ATHLETE VALUES (56, 'Thiago Almada', 'Argentina', 22, NULL, 36);
+INSERT INTO ATHLETE VALUES (57, 'Aitana Bonmati', 'Spain', 26, NULL, 37);
+INSERT INTO ATHLETE VALUES (58, 'Kylian Mbappe', 'France', 25, 17, 38);
+INSERT INTO ATHLETE VALUES (59, 'Alex Morgan', 'United States', 34, NULL, 39);
+INSERT INTO ATHLETE VALUES (60, 'Trinity Rodman', 'United States', 21, NULL, 40);
+INSERT INTO ATHLETE VALUES (61, 'Sophia Smith', 'United States', 23, NULL, 41);
+INSERT INTO ATHLETE VALUES (62, 'Lamine Yamal', 'Spain', 16, 17, 38);
+INSERT INTO ATHLETE VALUES (63, 'Natalia Grossman', 'United States', 22, NULL, 42);
+INSERT INTO ATHLETE VALUES (64, 'Sam Watson', 'United States', 18, NULL, 43);
+INSERT INTO ATHLETE VALUES (65, 'Carissa Moore', 'United States', 31, NULL, 44);
+INSERT INTO ATHLETE VALUES (66, 'Gabriel Medina', 'Brazil', 30, NULL, 45);
+INSERT INTO ATHLETE VALUES (67, 'Jack Alexy', 'United States', 21, 7, 46);
+INSERT INTO ATHLETE VALUES (68, 'Kate Douglass', 'United States', 22, 8, 47);
+INSERT INTO ATHLETE VALUES (69, 'Caeleb Dressel', 'United States', 27, 7, 46);
+INSERT INTO ATHLETE VALUES (70, 'Katie Ledecky', 'United States', 27, 8, 47);
+INSERT INTO ATHLETE VALUES (71, 'Leon Marchand', 'France', 21, 7, 46);
+INSERT INTO ATHLETE VALUES (72, 'Summer McIntosh', 'Canada', 17, 8, 47);
+INSERT INTO ATHLETE VALUES (73, 'Regan Smith', 'United States', 22, 8, 47);
+INSERT INTO ATHLETE VALUES (74, 'Ma Long', 'China', 35, NULL, 48);
+INSERT INTO ATHLETE VALUES (75, 'CJ Nickolas', 'United States', 22, NULL, 49);
+INSERT INTO ATHLETE VALUES (76, 'Carlos Alcaraz', 'Spain', 20, 9, 50);
+INSERT INTO ATHLETE VALUES (77, 'Novak Djokovic', 'Serbia', 36, 9, 50);
+INSERT INTO ATHLETE VALUES (78, 'Coco Gauff', 'United States', 20, 10, 51);
+INSERT INTO ATHLETE VALUES (79, 'Aryna Sabalenka', 'Belarus', 25, 10, 51);
+INSERT INTO ATHLETE VALUES (80, 'Iga Swiatek', 'Poland', 22, 10, 51);
+INSERT INTO ATHLETE VALUES (81, 'Christian Coleman', 'United States', 28, 11, 52);
+INSERT INTO ATHLETE VALUES (82, 'Ryan Crouser', 'United States', 31, 11, 52);
+INSERT INTO ATHLETE VALUES (83, 'Mondo Duplantis', 'Sweden', 24, 11, 52);
+INSERT INTO ATHLETE VALUES (84, 'Shelly-Ann Fraser-Pryce', 'Jamaica', 37, 11, 52);
+INSERT INTO ATHLETE VALUES (85, 'Anna Hall', 'United States', 23, 11, 52);
+INSERT INTO ATHLETE VALUES (86, 'Jakob Ingebrigtsen', 'Norway', 23, 12, 53);
+INSERT INTO ATHLETE VALUES (87, 'Noah Lyles', 'United States', 26, 12, 53);
+INSERT INTO ATHLETE VALUES (88, 'Sydney McLaughlin-Levrone', 'United States', 24, 12, 53);
+INSERT INTO ATHLETE VALUES (89, "Sha'Carri Richardson", 'United States', 24, 12, 53);
+INSERT INTO ATHLETE VALUES (90, 'Bryony Page', 'Great Britain', 33, NULL, 54);
+INSERT INTO ATHLETE VALUES (91, 'Alex Yee', 'Great Britain', 26, NULL, 55);
+INSERT INTO ATHLETE VALUES (92, 'Jordan Larson', 'United States', 37, NULL, 56);
+INSERT INTO ATHLETE VALUES (93, "Earvin N'Gapeth", 'France', 26, NULL, 57);
+INSERT INTO ATHLETE VALUES (94, 'Ashleigh Johnson', 'United States', 29, NULL, 58);
+INSERT INTO ATHLETE VALUES (95, 'Dusan Mandic', 'Serbia', 29, NULL, 59);
+INSERT INTO ATHLETE VALUES (96, 'Olivia Reeves', 'United States', 20, NULL, 60);
+INSERT INTO ATHLETE VALUES (97, 'Lasha Talakhadze', 'Georgia', 30, NULL, 61);
+INSERT INTO ATHLETE VALUES (98, 'Amit Elor', 'United States', 20, NULL, 62);
+INSERT INTO ATHLETE VALUES (99, 'Mijain Lopez', 'Cuba', 41, 15, 63);
+INSERT INTO ATHLETE VALUES (100, 'David Taylor', 'United States', 33, 15, 63);
+INSERT INTO ATHLETE VALUES (101, 'Yuto Horigome', 'Japanese', 20, NULL, 64);
+INSERT INTO ATHLETE VALUES (102, 'David Taylor', 'United States', 25, NULL, 65);
+INSERT INTO ATHLETE VALUES (103, 'Flora Duffy', 'Bermuda', 30, NULL, 66);
+INSERT INTO ATHLETE VALUES (104, 'Armand Duplantis', 'Sweden', 35, NULL, 67);
+INSERT INTO ATHLETE VALUES (105, 'Alaa Maso', 'France', 40, NULL, 68);
+
+-- INSERT RECORDS INTO VENUE TABLE
+INSERT INTO VENUE VALUES (1, 'Aquatics Centre', 'Saint-Denis');
+INSERT INTO VENUE VALUES (2, 'Bercy Arena', 'Paris');
+INSERT INTO VENUE VALUES (3, 'Bordeaux Stadium', 'Bordeaux');
+INSERT INTO VENUE VALUES (4, 'Champ de Mars Arena', 'Paris');
+INSERT INTO VENUE VALUES (5, 'Château de Versailles', 'Versailles');
+INSERT INTO VENUE VALUES (6, 'Chateauroux Shooting Centre', 'Châteauroux');
+INSERT INTO VENUE VALUES (7, 'Eiffel Tower Stadium', 'Paris');
+INSERT INTO VENUE VALUES (8, 'Elancourt Hill', 'Elancourt');
+INSERT INTO VENUE VALUES (9, 'Geoffroy-Guichard Stadium', 'Saint-Etienne');
+INSERT INTO VENUE VALUES (10, 'Grand Palais', 'Paris');
+INSERT INTO VENUE VALUES (11, 'Hôtel de Ville', 'Paris IV');
+INSERT INTO VENUE VALUES (12, 'Invalides', 'Paris');
+INSERT INTO VENUE VALUES (13, 'La Beaujoire Stadium', 'Nantes');
+INSERT INTO VENUE VALUES (14, 'La Concorde', 'Paris');
+INSERT INTO VENUE VALUES (15, 'Le Bourget Sport Climbing Venue', 'Le Bourget');
+INSERT INTO VENUE VALUES (16, 'Golf National', 'Saint-Quentin-en-Yvelines');
+INSERT INTO VENUE VALUES (17, 'Lyon Stadium', 'Décines');
+INSERT INTO VENUE VALUES (18, 'Marseille Marina', 'Marseille');
+INSERT INTO VENUE VALUES (19, 'Marseille Stadium', 'Marseille');
+INSERT INTO VENUE VALUES (20, 'Nice Stadium', 'Nice');
+INSERT INTO VENUE VALUES (21, 'North Paris Arena', 'Villepinte');
+INSERT INTO VENUE VALUES (22, 'Parc des Princes', 'Paris');
+INSERT INTO VENUE VALUES (23, 'Paris La Defense Arena', 'Nanterre');
+INSERT INTO VENUE VALUES (24, 'Pierre Mauroy Stadium', 'Villeneuve-d’Ascq');
+INSERT INTO VENUE VALUES (25, 'Pont Alexandre III', 'Paris');
+INSERT INTO VENUE VALUES (26, 'Porte de La Chapelle Arena', 'Paris');
+INSERT INTO VENUE VALUES (27, 'Stade Roland-Garros', 'Paris');
+INSERT INTO VENUE VALUES (28, 'Saint-Quentin-en-Yvelines BMX Stadium', 'Montigny-le-Bretonneux');
+INSERT INTO VENUE VALUES (29, 'Saint-Quentin-en-Yvelines Velodrome', 'Montigny-le-Bretonneux');
+INSERT INTO VENUE VALUES (30, 'South Paris Arena', 'Paris');
+INSERT INTO VENUE VALUES (31, 'Stade de France', 'Saint-Denis');
+INSERT INTO VENUE VALUES (32, 'Teahupo’o, Tahiti', 'Teahupo’o');
+INSERT INTO VENUE VALUES (33, 'Trocadéro', 'Paris');
+INSERT INTO VENUE VALUES (34, 'Vaires-sur-Marne Nautical Stadium', 'Vaires-sur-Marne');
+INSERT INTO VENUE VALUES (35, 'Yves-du-Manoir Stadium', 'Colombes');
+
+-- INSERT RECORDS INTO SPORT TABLE
+INSERT INTO SPORT VALUES (1, 'Archery');
+INSERT INTO SPORT VALUES (2, 'Artistic Gymnastics');
+INSERT INTO SPORT VALUES (3, 'Artistic Swimming');
+INSERT INTO SPORT VALUES (4, 'Athletics');
+INSERT INTO SPORT VALUES (5, 'Badminton');
+INSERT INTO SPORT VALUES (6, 'Basketball');
+INSERT INTO SPORT VALUES (7, 'Basketball 3x3');
+INSERT INTO SPORT VALUES (8, 'Beach Volleyball');
+INSERT INTO SPORT VALUES (9, 'Boxing');
+INSERT INTO SPORT VALUES (10, 'Breaking');
+INSERT INTO SPORT VALUES (11, 'Canoe Slalom');
+INSERT INTO SPORT VALUES (12, 'Canoe Sprint');
+INSERT INTO SPORT VALUES (13, 'Cycling BMX Freestyle');
+INSERT INTO SPORT VALUES (14, 'Cycling BMX Racing');
+INSERT INTO SPORT VALUES (15, 'Cycling Mountain Bike');
+INSERT INTO SPORT VALUES (16, 'Cycling Road');
+INSERT INTO SPORT VALUES (17, 'Cycling Track');
+INSERT INTO SPORT VALUES (18, 'Diving');
+INSERT INTO SPORT VALUES (19, 'Equestrian');
+INSERT INTO SPORT VALUES (20, 'Fencing');
+INSERT INTO SPORT VALUES (21, 'Football');
+INSERT INTO SPORT VALUES (22, 'Golf');
+INSERT INTO SPORT VALUES (23, 'Handball');
+INSERT INTO SPORT VALUES (24, 'Hockey');
+INSERT INTO SPORT VALUES (25, 'Judo');
+INSERT INTO SPORT VALUES (26, 'Marathon Swimming');
+INSERT INTO SPORT VALUES (27, 'Modern Pentathlon');
+INSERT INTO SPORT VALUES (28, 'Rhythmic Gymnastics');
+INSERT INTO SPORT VALUES (29, 'Rowing');
+INSERT INTO SPORT VALUES (30, 'Rugby Sevens');
+INSERT INTO SPORT VALUES (31, 'Sailing');
+INSERT INTO SPORT VALUES (32, 'Shooting');
+INSERT INTO SPORT VALUES (33, 'Skateboarding');
+INSERT INTO SPORT VALUES (34, 'Sport Climbing');
+INSERT INTO SPORT VALUES (35, 'Surfing');
+INSERT INTO SPORT VALUES (36, 'Swiming');
+INSERT INTO SPORT VALUES (37, 'Table Tennis');
+INSERT INTO SPORT VALUES (38, 'Taekwondo');
+INSERT INTO SPORT VALUES (39, 'Tennis');
+INSERT INTO SPORT VALUES (40, 'Trampoline');
+INSERT INTO SPORT VALUES (41, 'Triathlon');
+INSERT INTO SPORT VALUES (42, 'Volleyball');
+INSERT INTO SPORT VALUES (43, 'Water Polo');
+INSERT INTO SPORT VALUES (44, 'Weightlifting');
+INSERT INTO SPORT VALUES (45, 'Wrestling');
+
+-- INSERT RECORDS INTO EQUIPMENT TABLE
+INSERT INTO EQUIPMENT VALUES (1, 'Recurve Bow', 50, 12, 'Before each event', 1);
+INSERT INTO EQUIPMENT VALUES (2, 'Arrows', 100, 12, 'Weekly', 1);
+INSERT INTO EQUIPMENT VALUES (3, 'Bow Stands', 20, 12, 'As needed', 1);
+INSERT INTO EQUIPMENT VALUES (4, 'Grips', 100, 2, 'Monthly', 2);
+INSERT INTO EQUIPMENT VALUES (5, 'Chalk', 200, 2, 'Weekly', 2);
+INSERT INTO EQUIPMENT VALUES (6, 'Rings', 10, 2, 'Before each event', 2);
+INSERT INTO EQUIPMENT VALUES (7, 'Nose Clips', 50, 1, 'Before each event', 3);
+INSERT INTO EQUIPMENT VALUES (8, 'Swim Caps', 100, 1, 'Weekly', 3);
+INSERT INTO EQUIPMENT VALUES (9, 'Starting Blocks', 20, 33, 'Before each event', 4);
+INSERT INTO EQUIPMENT VALUES (10, 'High Jump Crossbar', 10, 33, 'Before each event', 4);
+INSERT INTO EQUIPMENT VALUES (11, 'Shuttlecock', 500, 26, 'Before each event', 5);
+INSERT INTO EQUIPMENT VALUES (12, 'Badminton Net', 10, 26, 'Before each event', 5);
+INSERT INTO EQUIPMENT VALUES (13, 'Court Marking Tape', 10, 26, 'Weekly', 5);
+INSERT INTO EQUIPMENT VALUES (14, 'Basketball', 20, 24, 'Before each event', 6);
+INSERT INTO EQUIPMENT VALUES (15, 'Scoreboard', 1, 24, 'Monthly', 6);
+INSERT INTO EQUIPMENT VALUES (16, 'Basketball Hoop', 4, 24, 'Before each event', 7);
+INSERT INTO EQUIPMENT VALUES (17, 'Beach Volleyball', 30, 7, 'Before each event', 8);
+INSERT INTO EQUIPMENT VALUES (18, 'Sand Rake', 2, 7, 'As needed', 8);
+INSERT INTO EQUIPMENT VALUES (19, 'Boxing Gloves', 50, 21, 'Before each event', 9);
+INSERT INTO EQUIPMENT VALUES (20, 'Headgear', 30, 21, 'Before each event', 9);
+INSERT INTO EQUIPMENT VALUES (21, 'Windbreaker Jacker', 50, 14, 'As needed', 10);
+INSERT INTO EQUIPMENT VALUES (22, 'Boombox', 10, 14, 'Before each event', 10);
+INSERT INTO EQUIPMENT VALUES (23, 'Canoe', 20, 34, 'Before each event', 11);
+INSERT INTO EQUIPMENT VALUES (24, 'Kayak', 20, 34, 'Before each event', 11);
+INSERT INTO EQUIPMENT VALUES (25, 'Life Jacker', 50, 34, 'Before each event', 12);
+INSERT INTO EQUIPMENT VALUES (26, 'BMX Bike', 30, 14, 'Before each event', 13);
+INSERT INTO EQUIPMENT VALUES (27, 'Helmet', 50, 28, 'Before each event', 14);
+INSERT INTO EQUIPMENT VALUES (28, 'Knee Pads', 50, 8, 'Before each event', 15);
+INSERT INTO EQUIPMENT VALUES (29, 'Gloves', 50, 25 , 'Before each event', 16);
+INSERT INTO EQUIPMENT VALUES (30, 'Elbow Pads', 50, 29, 'Before each event', 17);
+INSERT INTO EQUIPMENT VALUES (31, 'Diving Board', 5, 1, 'Weekly', 18);
+INSERT INTO EQUIPMENT VALUES (32, 'Swim Fins', 30, 1, 'Before each event', 18);
+INSERT INTO EQUIPMENT VALUES (33, 'Horse Blanket', 50, 5, 'Before each event', 19);
+INSERT INTO EQUIPMENT VALUES (34, 'Grooming Kit', 50, 5, 'Daily', 19);
+INSERT INTO EQUIPMENT VALUES (36, 'Fencing Foil', 50, 10, 'Before each event', 20);
+INSERT INTO EQUIPMENT VALUES (37, 'Goalkeeper Gloves', 20, 17, 'Before each event', 21);
+INSERT INTO EQUIPMENT VALUES (38, 'Corner Flags', 4, 18, 'Weekly', 21);
+INSERT INTO EQUIPMENT VALUES (39, 'Referee Whistle', 5, 19, 'Before each event', 21);
+INSERT INTO EQUIPMENT VALUES (40, 'Golf Gloves', 50, 16, 'As needed', 22);
+INSERT INTO EQUIPMENT VALUES (41, 'Court Markings', 50, 30, 'Before each event', 23);
+INSERT INTO EQUIPMENT VALUES (42, 'Hockey Stick', 50, 35, 'Before each event', 24);
+INSERT INTO EQUIPMENT VALUES (43, 'Tatami Mats', 20, 4, 'Weekly', 25);
+INSERT INTO EQUIPMENT VALUES (44, 'Judo Belt', 50, 4, 'Before each event', 25);
+INSERT INTO EQUIPMENT VALUES (45, 'Timing Chip', 100, 25, 'Before each event', 26);
+INSERT INTO EQUIPMENT VALUES (46, 'Goggles', 50, 25, 'Before each event', 26);
+INSERT INTO EQUIPMENT VALUES (47, 'Epee', 20, 21, 'Before each event', 27);
+INSERT INTO EQUIPMENT VALUES (48, 'Air Pistol', 20, 21, 'Before each event', 27);
+INSERT INTO EQUIPMENT VALUES (49, 'Ribbon', 50, 26, 'Before each event', 28);
+INSERT INTO EQUIPMENT VALUES (50, 'Coxswain Seat', 10, 34, 'Before each event', 29);
+INSERT INTO EQUIPMENT VALUES (51, 'Buoyancy Aid', 50, 34, 'Before each event', 29);
+INSERT INTO EQUIPMENT VALUES (52, 'Rugby Jersey', 50, 31, 'Before each event', 30);
+INSERT INTO EQUIPMENT VALUES (53, 'Mast', 20, 18, 'Before each event', 31);
+INSERT INTO EQUIPMENT VALUES (54, 'Ammunition', 500, 6, 'Before each event', 32);
+INSERT INTO EQUIPMENT VALUES (55, 'Pistol', 50, 6, 'Before each event', 32);
+INSERT INTO EQUIPMENT VALUES (56, 'Skateboard', 50, 14, 'Before each event', 33);
+INSERT INTO EQUIPMENT VALUES (57, 'Harness', 50, 15, 'Before each event', 34);
+INSERT INTO EQUIPMENT VALUES (58, 'Wax', 50, 32, 'Before each event', 35);
+INSERT INTO EQUIPMENT VALUES (59, 'Kickboard', 50, 23, 'Before each event', 36);
+INSERT INTO EQUIPMENT VALUES (60, 'Pull Buoy', 50, 23, 'Before each event', 36);
+INSERT INTO EQUIPMENT VALUES (61, 'Racket', 50, 30, 'Before each event', 37);
+INSERT INTO EQUIPMENT VALUES (62, 'Chest Protector', 50, 10, 'Before each event', 38);
+INSERT INTO EQUIPMENT VALUES (63, 'Balls', 500, 27, 'Before each event', 39);
+INSERT INTO EQUIPMENT VALUES (64, 'Net', 20, 27, 'Weekly', 39);
+INSERT INTO EQUIPMENT VALUES (65, 'Frame Pad', 20, 2, 'Before each event', 40);
+INSERT INTO EQUIPMENT VALUES (66, 'Sunglasses', 50, 25, 'Before each event', 41);
+INSERT INTO EQUIPMENT VALUES (67, 'Net', 20, 30, 'Before each event', 42);
+INSERT INTO EQUIPMENT VALUES (68, 'Goalkeeper Gear', 4, 1, 'Before each event', 43);
+INSERT INTO EQUIPMENT VALUES (69, 'Goals', 4, 1, 'Before each event', 43);
+INSERT INTO EQUIPMENT VALUES (70, 'Barbell', 20, 30, 'Before each event', 44);
+INSERT INTO EQUIPMENT VALUES (71, 'Collars', 50, 30, 'Before each event', 44);
+INSERT INTO EQUIPMENT VALUES (72, 'Weight Plates', 100, 30, 'Before each event', 44);
+INSERT INTO EQUIPMENT VALUES (73, 'Singlet', 50, 4, 'Before each event', 45);
+
+-- INSERT RECORDS INTO EVENT TABLE
+INSERT INTO EVENT VALUES (1, 'Men’s Group C', '2024-07-24 15:00:00', 21, 22);
+INSERT INTO EVENT VALUES (2, 'Men’s Group D', '2024-07-24 19:00:00', 21, 3);
+INSERT INTO EVENT VALUES (3, 'Individual Ranking Round', '2024-07-25 09:30:00', 1, 12);
+INSERT INTO EVENT VALUES (4, 'Women’s Group C', '2024-07-25 17:00:00', 21, 13);
+INSERT INTO EVENT VALUES (5, 'Women’s Group A', '2024-07-25 17:00:00', 21, 9);
+INSERT INTO EVENT VALUES (6, 'Preliminary Phase', '2024-07-25 09:00:00', 23, 30);
+INSERT INTO EVENT VALUES (7, 'Preliminary Phase', '2024-07-25 14:00:00', 30, 31);
+INSERT INTO EVENT VALUES (8, 'Qualification', '2024-07-27 15:30:00', 2, 2);
+INSERT INTO EVENT VALUES (9, 'Singles Group play stage', '2024-07-27 11:00:00', 5, 26);
+INSERT INTO EVENT VALUES (10, 'Group Phase', '2024-07-27 13:30:00', 6, 24);
+INSERT INTO EVENT VALUES (11, 'Preliminary Match', '2024-07-27 18:00:00', 8, 7);
+INSERT INTO EVENT VALUES (12, 'Men’s 80kg - Prelims - Round of 32', '2024-07-27 17:38:00', 9, 21);
+INSERT INTO EVENT VALUES (13, 'Men’s Canoe Single Heats 1st Run', '2024-07-27 15:00:00', 11, 34);
+INSERT INTO EVENT VALUES (14, 'Women’s Canoe Single Heats 1st Run', '2024-07-27 15:50:00', 11, 34);
+INSERT INTO EVENT VALUES (15, 'Individual Time Trial', '2024-07-27 16:34:00', 16, 25);
+INSERT INTO EVENT VALUES (16, 'Synchronised 3m Springboard Fnl', '2024-07-27 11:00:00', 18, 1);
+INSERT INTO EVENT VALUES (17, 'Eventing Dressage', '2024-07-27 09:30:00', 19, 5);
+INSERT INTO EVENT VALUES (18, 'Women’s Épée Individual Table of 64', '2024-07-27 10:00:00', 20, 10);
+INSERT INTO EVENT VALUES (19, 'Men’s Sabre Individual Table of 64', '2024-07-27 10:25:00', 20, 10);
+INSERT INTO EVENT VALUES (20, 'Preliminary Phase', '2024-07-27 21:00:00', 23, 30);
+INSERT INTO EVENT VALUES (21, 'Men’s Pool B', '2024-07-27 13:15:00', 24, 35);
+INSERT INTO EVENT VALUES (22, 'Men - 60 kg Elimination Round of 64', '2024-07-27 10:00:00', 25, 4);
+INSERT INTO EVENT VALUES (23, 'Men’s Single Sculls Heats', '2024-07-27 09:00:00', 29, 34);
+INSERT INTO EVENT VALUES (24, 'Women’s Single Sculls Heats', '2024-07-27 10:12:00', 29, 34);
+INSERT INTO EVENT VALUES (25, '10m Air Pistol Men’s Qualification', '2024-07-27 10:30:00', 32, 6);
+INSERT INTO EVENT VALUES (26, 'Men’s Street Prelims', '2024-07-27 12:00:00', 33, 14);
+INSERT INTO EVENT VALUES (27, 'Women’s Round 1', '2024-07-27 23:48:00', 35, 32);
+INSERT INTO EVENT VALUES (28, 'Women’s 4 x 100m Freestyle Relay - Heats', '2024-07-27 11:00:00', 36, 23);
+INSERT INTO EVENT VALUES (29, 'Men’s 100m Breaststroke - Heats', '2024-07-27 21:37:00', 36, 23);
+INSERT INTO EVENT VALUES (30, 'Singles Preliminary Round', '2024-07-27 15:00:00', 37, 30);
+INSERT INTO EVENT VALUES (31, 'MS First Round', '2024-07-27 12:00:00', 39, 27);
+INSERT INTO EVENT VALUES (32, 'Men’s Preliminary Phase', '2024-07-27 09:00:00', 42, 30);
+INSERT INTO EVENT VALUES (33, 'Women’s Preliminary Round - Group A', '2024-07-27 20:05:00', 43, 1);
+INSERT INTO EVENT VALUES (34, 'Cross-country', '2024-07-28 14:10:00', 15, 8);
+INSERT INTO EVENT VALUES (35, 'Women’s Windsurfing - Race 1', '2024-07-28 18:00:00', 31, 18);
+INSERT INTO EVENT VALUES (36, 'Team Technical Routine', '2024-08-05 19:30:00', 3, 1);
+INSERT INTO EVENT VALUES (37, '20km Race Walk', '2024-08-01 07:30:00', 4, 33);
+INSERT INTO EVENT VALUES (38, 'Men’s Group Phase - GroupB', '2024-08-02 11:00:00', 7, 24);
+INSERT INTO EVENT VALUES (39, 'B-Girls Round Robin', '2024-08-09 16:00:00', 10, 14);
+INSERT INTO EVENT VALUES (40, 'B-Boys Round Robin', '2024-08-10 16:00:00', 10, 14);
+INSERT INTO EVENT VALUES (41, 'Kayak Four 500m Heats', '2024-08-06 09:30:00', 12, 34);
+INSERT INTO EVENT VALUES (42, 'Park Qualification', '2024-07-30 13:25:00', 13, 14);
+INSERT INTO EVENT VALUES (43, 'Quaterfinals Run 1', '2024-08-01 20:00:00', 14, 28);
+INSERT INTO EVENT VALUES (44, 'Team Sprint', '2024-08-05 17:00:00', 17, 29);
+INSERT INTO EVENT VALUES (45, 'Men’s Round 1', '2024-08-01 09:00:00', 22, 16);
+INSERT INTO EVENT VALUES (46, 'Women’s Round 1', '2024-08-07 09:00:00', 22, 16);
+INSERT INTO EVENT VALUES (47, '10km', '2024-08-08 07:30:00', 26, 25);
+INSERT INTO EVENT VALUES (48, 'Fencing Ranking Round', '2024-08-08 11:00:00', 27, 21);
+INSERT INTO EVENT VALUES (49, 'Individual All-Around Qual - Part 1 of 2', '2024-08-08 10:00:00', 28, 26);
+INSERT INTO EVENT VALUES (50, 'Men’s Boulder & Lead, Semifinal Boulder', '2024-08-05 10:00:00', 34, 15);
+INSERT INTO EVENT VALUES (51, 'Women’s Speed, Qualification Elimination', '2024-08-05 13:40:00', 34, 15);
+INSERT INTO EVENT VALUES (52, 'Men - 58kg Round of 16', '2024-08-07 09:10:00', 38, 10);
+INSERT INTO EVENT VALUES (53, 'Women’s Qualification', '2024-08-02 12:00:00', 40, 2);
+INSERT INTO EVENT VALUES (54, 'Men’s Individual', '2024-07-30 08:00:00', 41, 25);
+INSERT INTO EVENT VALUES (55, 'Men’s +102kg', '2024-08-10 20:30:00', 44, 30);
+INSERT INTO EVENT VALUES (56, 'Women’s +81kg', '2024-08-11 11:30:00', 44, 30);
+INSERT INTO EVENT VALUES (57, 'MFS 57kg Repechage', '2024-08-09 11:00:00', 45, 4);
+INSERT INTO EVENT VALUES (58, 'WFS 62kg 1/4 Final', '2024-08-09 12:50:00', 45, 4);
+INSERT INTO EVENT VALUES (59, 'Decathlon 100m', '2024-08-02 10:05:00', 4, 11);
+INSERT INTO EVENT VALUES (60, 'Men’s Group B', '2024-07-27 15:00:00', 21, 17);
+INSERT INTO EVENT VALUES (61, 'Women’s Group B', '2024-07-28 21:00:00', 21, 19);
+INSERT INTO EVENT VALUES (62, 'Women’s Group A', '2024-07-31 21:00:00', 21, 20);
+INSERT INTO EVENT VALUES (63, 'WS First Round', '2024-07-28 12:00:00', 39, 27);
+INSERT INTO EVENT VALUES (64, 'Women’s Placing 5-8', '2024-07-30 14:30:00', 30, 31);
+INSERT INTO EVENT VALUES (65, 'Group Phase', '2024-07-29 11:00:00', 6, 24);
+INSERT INTO EVENT VALUES (66, 'Women’s Park Prelims', '2024-08-06 12:30:00', 33, 14);
+INSERT INTO EVENT VALUES (67, 'Men’s Round 1', '2024-07-27 19:00:00', 35, 32);
+INSERT INTO EVENT VALUES (68, 'Women’s Preliminary Phase', '2024-07-28 13:00:00', 42, 30);
+INSERT INTO EVENT VALUES (69, 'Men’s Preliminary Round - Group A', '2024-07-28 15:00:00', 43, 1);
+INSERT INTO EVENT VALUES (70, 'Individual Time Trial', '2024-07-27 14:30:00', 16, 25);
+INSERT INTO EVENT VALUES (71, 'Cross-country', '2024-07-28 14:10:00', 15, 8);
+INSERT INTO EVENT VALUES (72, 'Kayak Four 500m Heats', '2024-08-06 09:30:00', 12, 34);
+INSERT INTO EVENT VALUES (73, 'Quaterfinals Run 1', '2024-08-01 20:30:00', 14, 28);
+INSERT INTO EVENT VALUES (74, '10km', '2024-08-08 14:30:00', 26, 25);
+
+-- INSERT RECORDS INTO PARTICIPATION TABLE
+INSERT INTO PARTICIPATION VALUES (55, 1);
+INSERT INTO PARTICIPATION VALUES (56, 2);
+INSERT INTO PARTICIPATION VALUES (58, 60);
+INSERT INTO PARTICIPATION VALUES (57, 4);
+INSERT INTO PARTICIPATION VALUES (59, 5);
+INSERT INTO PARTICIPATION VALUES (60, 61);
+INSERT INTO PARTICIPATION VALUES (61, 62);
+INSERT INTO PARTICIPATION VALUES (62, 60);
+INSERT INTO PARTICIPATION VALUES (1, 3);
+INSERT INTO PARTICIPATION VALUES (2, 3);
+INSERT INTO PARTICIPATION VALUES (8, 6);
+INSERT INTO PARTICIPATION VALUES (48, 7);
+INSERT INTO PARTICIPATION VALUES (47, 64);
+INSERT INTO PARTICIPATION VALUES (4, 9);
+INSERT INTO PARTICIPATION VALUES (5, 10);
+INSERT INTO PARTICIPATION VALUES (6, 10);
+INSERT INTO PARTICIPATION VALUES (7, 10);
+INSERT INTO PARTICIPATION VALUES (8, 10);
+INSERT INTO PARTICIPATION VALUES (11, 10);
+INSERT INTO PARTICIPATION VALUES (9, 65);
+INSERT INTO PARTICIPATION VALUES (10, 65);
+INSERT INTO PARTICIPATION VALUES (13, 11);
+INSERT INTO PARTICIPATION VALUES (14, 11);
+INSERT INTO PARTICIPATION VALUES (15, 11);
+INSERT INTO PARTICIPATION VALUES (16, 11);
+INSERT INTO PARTICIPATION VALUES (17, 12);
+INSERT INTO PARTICIPATION VALUES (21, 13);
+INSERT INTO PARTICIPATION VALUES (20, 14);
+INSERT INTO PARTICIPATION VALUES (24, 16);
+INSERT INTO PARTICIPATION VALUES (25, 16);
+INSERT INTO PARTICIPATION VALUES (26, 17);
+INSERT INTO PARTICIPATION VALUES (27, 18);
+INSERT INTO PARTICIPATION VALUES (28, 19);
+INSERT INTO PARTICIPATION VALUES (41, 20);
+INSERT INTO PARTICIPATION VALUES (29, 21);
+INSERT INTO PARTICIPATION VALUES (42, 22);
+INSERT INTO PARTICIPATION VALUES (45, 23);
+INSERT INTO PARTICIPATION VALUES (46, 24);
+INSERT INTO PARTICIPATION VALUES (50, 25);
+INSERT INTO PARTICIPATION VALUES (51, 26);
+INSERT INTO PARTICIPATION VALUES (52, 66);
+INSERT INTO PARTICIPATION VALUES (53, 26);
+INSERT INTO PARTICIPATION VALUES (54, 26);
+INSERT INTO PARTICIPATION VALUES (65, 27);
+INSERT INTO PARTICIPATION VALUES (66, 67);
+INSERT INTO PARTICIPATION VALUES (67, 29);
+INSERT INTO PARTICIPATION VALUES (68, 28);
+INSERT INTO PARTICIPATION VALUES (69, 29);
+INSERT INTO PARTICIPATION VALUES (70, 28);
+INSERT INTO PARTICIPATION VALUES (71, 29);
+INSERT INTO PARTICIPATION VALUES (72, 28);
+INSERT INTO PARTICIPATION VALUES (73, 28);
+INSERT INTO PARTICIPATION VALUES (74, 30);
+INSERT INTO PARTICIPATION VALUES (76, 31);
+INSERT INTO PARTICIPATION VALUES (77, 31);
+INSERT INTO PARTICIPATION VALUES (78, 63);
+INSERT INTO PARTICIPATION VALUES (79, 63);
+INSERT INTO PARTICIPATION VALUES (80, 63);
+INSERT INTO PARTICIPATION VALUES (92, 68);
+INSERT INTO PARTICIPATION VALUES (93, 32);
+INSERT INTO PARTICIPATION VALUES (94, 33);
+INSERT INTO PARTICIPATION VALUES (95, 69);
+INSERT INTO PARTICIPATION VALUES (49, 35);
+INSERT INTO PARTICIPATION VALUES (3, 36);
+INSERT INTO PARTICIPATION VALUES (81, 37);
+INSERT INTO PARTICIPATION VALUES (82, 37);
+INSERT INTO PARTICIPATION VALUES (83, 37);
+INSERT INTO PARTICIPATION VALUES (84, 37);
+INSERT INTO PARTICIPATION VALUES (85, 37);
+INSERT INTO PARTICIPATION VALUES (86, 59);
+INSERT INTO PARTICIPATION VALUES (87, 59);
+INSERT INTO PARTICIPATION VALUES (88, 59);
+INSERT INTO PARTICIPATION VALUES (89, 59);
+INSERT INTO PARTICIPATION VALUES (12, 38);
+INSERT INTO PARTICIPATION VALUES (18, 40);
+INSERT INTO PARTICIPATION VALUES (19, 39);
+INSERT INTO PARTICIPATION VALUES (23, 44);
+INSERT INTO PARTICIPATION VALUES (30, 46);
+INSERT INTO PARTICIPATION VALUES (31, 45);
+INSERT INTO PARTICIPATION VALUES (32, 45);
+INSERT INTO PARTICIPATION VALUES (33, 45);
+INSERT INTO PARTICIPATION VALUES (34, 46);
+INSERT INTO PARTICIPATION VALUES (43, 48);
+INSERT INTO PARTICIPATION VALUES (44, 49);
+INSERT INTO PARTICIPATION VALUES (63, 51);
+INSERT INTO PARTICIPATION VALUES (64, 50);
+INSERT INTO PARTICIPATION VALUES (75, 52);
+INSERT INTO PARTICIPATION VALUES (90, 53);
+INSERT INTO PARTICIPATION VALUES (91, 54);
+INSERT INTO PARTICIPATION VALUES (96, 56);
+INSERT INTO PARTICIPATION VALUES (97, 55);
+INSERT INTO PARTICIPATION VALUES (98, 58);
+INSERT INTO PARTICIPATION VALUES (99, 57);
+INSERT INTO PARTICIPATION VALUES (100, 57);
+INSERT INTO PARTICIPATION VALUES (35, 8);
+INSERT INTO PARTICIPATION VALUES (36, 8);
+INSERT INTO PARTICIPATION VALUES (37, 8);
+INSERT INTO PARTICIPATION VALUES (38, 8);
+INSERT INTO PARTICIPATION VALUES (39, 8);
+INSERT INTO PARTICIPATION VALUES (40, 8);
+INSERT INTO PARTICIPATION VALUES (22, 42);
+INSERT INTO PARTICIPATION VALUES (101, 15);
+INSERT INTO PARTICIPATION VALUES (102, 34);
+INSERT INTO PARTICIPATION VALUES (103, 41);
+INSERT INTO PARTICIPATION VALUES (104, 43);
+INSERT INTO PARTICIPATION VALUES (105, 47);
+
+-- INSERT RECORDS INTO VOLUNTEER TABLE
+INSERT INTO VOLUNTEER VALUES (1, 'Alivia Portillo', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (2, 'Wallace Beard', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (3, 'Ezra Bautista', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (4, 'Raul Bender', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (5, 'Lilyana Huang', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (6, 'Ayaan Boone', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (7, 'Mariam Zamora', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (8, 'Quentin Hayden', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (9, 'Avayah Morrison', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (10, 'Maximus McFarland', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (11, 'Annika Kelly ', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (12, 'Cooper Pennington', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (13, 'Yareli Hunt', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (14, 'Jesus Brandt', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (15, 'Loretta McMillan', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (16, 'Vada Lucas  ', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (17, 'Rocky Hardin', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (18, 'Chance Kane', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (19, 'Ellianna Wells', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (20, 'Max Banks', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (21, 'Cali Perry', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (22, 'Waylon Barton', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (23, 'Danna Ashley', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (24, 'Kylen McCormick', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (25, 'Macie Bond', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (26, 'Roger Kaur', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (27, 'Holland King', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (28, 'Julian Macias', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (29, 'Adley Cabrera', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (30, 'Cade Xiong', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (31, 'Amayah Copeland', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (32, 'Axton Fletcher', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (33, 'Anaya Leon', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (34, 'Marshall Gregory', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (35, 'Alaya Carey', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (36, 'Watson Kerr', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (37, 'Baylee Orr', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (38, 'Benicio Gentry', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (39, 'Amelie Conner', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (40, 'Phillip Fitzgerald', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (41, 'Marlee Rowe', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (42, 'Kamden Kirby', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (43, 'Skyla Navarro', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (44, 'Reid Wilcox', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (45, 'Ashlyn Collier', 'Performance Support');
+INSERT INTO VOLUNTEER VALUES (46, 'Edison Zuniga', 'Experience Support');
+INSERT INTO VOLUNTEER VALUES (47, 'Leslie Evans', 'Experience Support');
+INSERT INTO VOLUNTEER VALUES (48, 'Elias Elliott', 'Experience Support');
+INSERT INTO VOLUNTEER VALUES (49, 'Noelle Hancock', 'Experience Support');
+INSERT INTO VOLUNTEER VALUES (50, 'Rex Huerta', 'Experience Support');
+INSERT INTO VOLUNTEER VALUES (51, 'Dulce Frye', 'Experience Support');
+INSERT INTO VOLUNTEER VALUES (52, 'Franco Rice', 'Experience Support');
+INSERT INTO VOLUNTEER VALUES (53, 'Ada Garcia', 'Experience Support');
+INSERT INTO VOLUNTEER VALUES (54, 'James Grant', 'Experience Support');
+INSERT INTO VOLUNTEER VALUES (55, 'Alaina Schmitt', 'Experience Support');
+INSERT INTO VOLUNTEER VALUES (56, 'Murphy McIntyre', 'Experience Support');
+INSERT INTO VOLUNTEER VALUES (57, 'Rebekah Frank', 'Experience Support');
+INSERT INTO VOLUNTEER VALUES (58, 'Braylen Owen', 'Experience Support');
+INSERT INTO VOLUNTEER VALUES (59, 'Mikayla Blair', 'Experience Support');
+INSERT INTO VOLUNTEER VALUES (60, 'Troy Dickerson', 'Experience Support');
+INSERT INTO VOLUNTEER VALUES (61, 'Opal Stephenson', 'Experience Support');
+INSERT INTO VOLUNTEER VALUES (62, 'Joe Harrison', 'Experience Support');
+INSERT INTO VOLUNTEER VALUES (63, 'Jasmine Browning', 'Experience Support');
+INSERT INTO VOLUNTEER VALUES (64, 'Rohan Hammond', 'Experience Support');
+INSERT INTO VOLUNTEER VALUES (65, 'Holly Bell', 'Experience Support');
+INSERT INTO VOLUNTEER VALUES (66, 'Emmett Cervantes', 'Experience Support');
+INSERT INTO VOLUNTEER VALUES (67, 'Aylin Reeves', 'Experience Support');
+INSERT INTO VOLUNTEER VALUES (68, 'Clark Benjamin', 'Experience Support');
+INSERT INTO VOLUNTEER VALUES (69, 'Jianna Douglas', 'Experience Support');
+INSERT INTO VOLUNTEER VALUES (70, 'Derek Christian', 'Experience Support');
+INSERT INTO VOLUNTEER VALUES (71, 'Anahi Cano', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (72, 'Terry Munoz', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (73, 'Kehlani Boyle', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (74, 'Robin Hahn', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (75, 'Fallon Maddox', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (76, 'Lyric Rice', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (77, 'Ada Buckley', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (78, 'Aryan Wilkins', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (79, 'Amalia Atkins', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (80, 'Cason Costa', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (81, 'Robin Salas', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (82, 'Zaiden Kaur', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (83, 'Holland Welch', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (84, 'Hendrix Campos', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (85, 'Sutton Portillo', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (86, 'Wallace Chase', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (87, 'Angie Massey', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (88, 'Donald Nash', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (89, 'Novah Gonzales', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (90, 'Brayden Norton', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (91, 'Kylee Rogers', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (92, 'Colton Morrow', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (93, 'Reyna Howe', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (94, 'Alaric Stuart', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (95, 'Stormi Ortega', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (96, 'Kobe Riley', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (97, 'Kayla Skinner', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (98, 'Ridge McCullough', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (99, 'Hana Valentine', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (100, 'Demetrius Sullivan', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (101, 'Melanie Vincent', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (102, 'Aarav Medrano', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (103, 'Halle Bennett', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (104, 'Leonardo Parra', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (105, 'Dalary Rodriguez', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (106, 'Henry Tate', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (107, 'Skye Person', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (108, 'Moses Mays', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (109, 'Denisse Wood', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (110, 'Carson Huang', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (111, 'Francesca Burns', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (112, 'August McDowell', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (113, 'Rayna Perkins', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (114, 'Kyrie Gibbs', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (115, 'Carter Baxter', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (116, 'Tomas Jacobson', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (117, 'Royal Peters', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (118, 'Patrick Anthony', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (119, 'Macy David', 'Organization Support');
+INSERT INTO VOLUNTEER VALUES (120, 'Alonso Ashley', 'Organization Support');
+
+-- INSERT RECORDS INTO TRAINING TABLE
+INSERT INTO TRAINING VALUES (1, 1, '2024-07-23 15:00:00');
+INSERT INTO TRAINING VALUES (2, 2, '2024-07-23 19:00:00');
+INSERT INTO TRAINING VALUES (3, 3, '2024-07-24 09:30:00');
+INSERT INTO TRAINING VALUES (4, 4, '2024-07-24 17:00:00');
+INSERT INTO TRAINING VALUES (5, 5, '2024-07-24 17:00:00');
+INSERT INTO TRAINING VALUES (6, 6, '2024-07-24 09:00:00');
+INSERT INTO TRAINING VALUES (7, 7, '2024-07-24 14:00:00');
+INSERT INTO TRAINING VALUES (8, 8, '2024-07-26 15:30:00');
+INSERT INTO TRAINING VALUES (9, 9, '2024-07-26 11:00:00');
+INSERT INTO TRAINING VALUES (10, 10, '2024-07-26 13:30:00');
+INSERT INTO TRAINING VALUES (11, 11, '2024-07-26 18:00:00');
+INSERT INTO TRAINING VALUES (12, 12, '2024-07-26 17:38:00');
+INSERT INTO TRAINING VALUES (13, 13, '2024-07-26 15:00:00');
+INSERT INTO TRAINING VALUES (14, 14, '2024-07-26 15:50:00');
+INSERT INTO TRAINING VALUES (15, 15, '2024-07-26 16:34:00');
+INSERT INTO TRAINING VALUES (16, 16, '2024-07-26 11:00:00');
+INSERT INTO TRAINING VALUES (17, 17, '2024-07-26 09:30:00');
+INSERT INTO TRAINING VALUES (18, 18, '2024-07-26 10:00:00');
+INSERT INTO TRAINING VALUES (19, 19, '2024-07-26 10:25:00');
+INSERT INTO TRAINING VALUES (20, 20, '2024-07-26 21:00:00');
+INSERT INTO TRAINING VALUES (21, 21, '2024-07-26 13:15:00');
+INSERT INTO TRAINING VALUES (22, 22, '2024-07-26 10:00:00');
+INSERT INTO TRAINING VALUES (23, 23, '2024-07-26 09:00:00');
+INSERT INTO TRAINING VALUES (24, 24, '2024-07-26 10:12:00');
+INSERT INTO TRAINING VALUES (25, 25, '2024-07-26 10:30:00');
+INSERT INTO TRAINING VALUES (26, 26, '2024-07-26 12:00:00');
+INSERT INTO TRAINING VALUES (27, 27, '2024-07-26 23:48:00');
+INSERT INTO TRAINING VALUES (28, 28, '2024-07-26 11:00:00');
+INSERT INTO TRAINING VALUES (29, 29, '2024-07-26 21:37:00');
+INSERT INTO TRAINING VALUES (30, 30, '2024-07-26 15:00:00');
+INSERT INTO TRAINING VALUES (31, 31, '2024-07-26 12:00:00');
+INSERT INTO TRAINING VALUES (32, 32, '2024-07-26 09:00:00');
+INSERT INTO TRAINING VALUES (33, 33, '2024-07-26 20:05:00');
+INSERT INTO TRAINING VALUES (34, 34, '2024-07-27 14:10:00');
+INSERT INTO TRAINING VALUES (35, 35, '2024-07-27 18:00:00');
+INSERT INTO TRAINING VALUES (36, 36, '2024-08-04 19:30:00');
+INSERT INTO TRAINING VALUES (37, 37, '2024-07-31 07:30:00');
+INSERT INTO TRAINING VALUES (38, 38, '2024-08-01 11:00:00');
+INSERT INTO TRAINING VALUES (39, 39, '2024-08-08 16:00:00');
+INSERT INTO TRAINING VALUES (40, 40, '2024-08-09 16:00:00');
+INSERT INTO TRAINING VALUES (41, 41, '2024-08-05 09:30:00');
+INSERT INTO TRAINING VALUES (42, 42, '2024-07-29 13:25:00');
+INSERT INTO TRAINING VALUES (43, 43, '2024-07-31 20:00:00');
+INSERT INTO TRAINING VALUES (44, 44, '2024-08-04 17:00:00');
+INSERT INTO TRAINING VALUES (45, 45, '2024-07-31 09:00:00');
+INSERT INTO TRAINING VALUES (46, 46, '2024-08-06 09:00:00');
+INSERT INTO TRAINING VALUES (47, 47, '2024-08-07 07:30:00');
+INSERT INTO TRAINING VALUES (48, 48, '2024-08-07 11:00:00');
+INSERT INTO TRAINING VALUES (49, 49, '2024-08-07 10:00:00');
+INSERT INTO TRAINING VALUES (50, 50, '2024-08-04 10:00:00');
+INSERT INTO TRAINING VALUES (51, 51, '2024-08-04 13:40:00');
+INSERT INTO TRAINING VALUES (52, 52, '2024-08-06 09:10:00');
+INSERT INTO TRAINING VALUES (53, 53, '2024-08-01 12:00:00');
+INSERT INTO TRAINING VALUES (54, 54, '2024-07-29 08:00:00');
+INSERT INTO TRAINING VALUES (55, 55, '2024-08-09 20:30:00');
+INSERT INTO TRAINING VALUES (56, 56, '2024-08-10 11:30:00');
+INSERT INTO TRAINING VALUES (57, 57, '2024-08-08 11:00:00');
+INSERT INTO TRAINING VALUES (58, 58, '2024-08-08 12:50:00');
+INSERT INTO TRAINING VALUES (59, 59, '2024-08-01 10:05:00');
+INSERT INTO TRAINING VALUES (60, 60, '2024-07-26 15:00:00');
+INSERT INTO TRAINING VALUES (61, 61, '2024-07-27 21:00:00');
+INSERT INTO TRAINING VALUES (62, 62, '2024-07-30 21:00:00');
+INSERT INTO TRAINING VALUES (63, 63, '2024-07-27 12:00:00');
+INSERT INTO TRAINING VALUES (64, 64, '2024-07-29 14:30:00');
+INSERT INTO TRAINING VALUES (65, 65, '2024-07-28 11:00:00');
+INSERT INTO TRAINING VALUES (66, 66, '2024-08-05 12:30:00');
+INSERT INTO TRAINING VALUES (67, 67, '2024-07-26 19:00:00');
+INSERT INTO TRAINING VALUES (68, 68, '2024-07-27 13:00:00');
+INSERT INTO TRAINING VALUES (69, 69, '2024-07-27 15:00:00');
+INSERT INTO TRAINING VALUES (70, 70, '2024-07-26 14:30:00');
+INSERT INTO TRAINING VALUES (71, 71, '2024-07-27 14:10:00');
+INSERT INTO TRAINING VALUES (72, 72, '2024-08-05 09:30:00');
+INSERT INTO TRAINING VALUES (73, 73, '2024-07-31 20:30:00');
+INSERT INTO TRAINING VALUES (74, 74, '2024-08-07 14:30:00');
+INSERT INTO TRAINING VALUES (49, 75, '2024-08-07 10:00:00');
+INSERT INTO TRAINING VALUES (50, 76, '2024-08-04 10:00:00');
+INSERT INTO TRAINING VALUES (51, 77, '2024-08-04 13:40:00');
+INSERT INTO TRAINING VALUES (52, 78, '2024-08-06 09:10:00');
+INSERT INTO TRAINING VALUES (53, 79, '2024-08-01 12:00:00');
+INSERT INTO TRAINING VALUES (54, 80, '2024-07-29 08:00:00');
+INSERT INTO TRAINING VALUES (55, 81, '2024-08-09 20:30:00');
+INSERT INTO TRAINING VALUES (56, 82, '2024-08-10 11:30:00');
+INSERT INTO TRAINING VALUES (57, 83, '2024-08-08 11:00:00');
+INSERT INTO TRAINING VALUES (58, 84, '2024-08-08 12:50:00');
+INSERT INTO TRAINING VALUES (59, 85, '2024-08-01 10:05:00');
+INSERT INTO TRAINING VALUES (60, 86, '2024-07-26 15:00:00');
+INSERT INTO TRAINING VALUES (61, 87, '2024-07-27 21:00:00');
+INSERT INTO TRAINING VALUES (62, 88, '2024-07-30 21:00:00');
+INSERT INTO TRAINING VALUES (63, 89, '2024-07-27 12:00:00');
+INSERT INTO TRAINING VALUES (64, 90, '2024-07-29 14:30:00');
+INSERT INTO TRAINING VALUES (65, 91, '2024-07-28 11:00:00');
+INSERT INTO TRAINING VALUES (66, 92, '2024-08-05 12:30:00');
+INSERT INTO TRAINING VALUES (67, 93, '2024-07-26 19:00:00');
+INSERT INTO TRAINING VALUES (68, 94, '2024-07-27 13:00:00');
+INSERT INTO TRAINING VALUES (69, 95, '2024-07-27 15:00:00');
+INSERT INTO TRAINING VALUES (70, 96, '2024-07-26 14:30:00');
+INSERT INTO TRAINING VALUES (71, 97, '2024-07-27 14:10:00');
+INSERT INTO TRAINING VALUES (72, 98, '2024-08-05 09:30:00');
+INSERT INTO TRAINING VALUES (73, 99, '2024-07-31 20:30:00');
+INSERT INTO TRAINING VALUES (74, 100, '2024-08-07 14:30:00');
+INSERT INTO TRAINING VALUES (29, 101, '2024-07-26 21:37:00');
+INSERT INTO TRAINING VALUES (30, 102, '2024-07-26 15:00:00');
+INSERT INTO TRAINING VALUES (31, 103, '2024-07-26 12:00:00');
+INSERT INTO TRAINING VALUES (32, 104, '2024-07-26 09:00:00');
+INSERT INTO TRAINING VALUES (33, 105, '2024-07-26 20:05:00');
+INSERT INTO TRAINING VALUES (34, 106, '2024-07-27 14:10:00');
+INSERT INTO TRAINING VALUES (35, 107, '2024-07-27 18:00:00');
+INSERT INTO TRAINING VALUES (36, 108, '2024-08-04 19:30:00');
+INSERT INTO TRAINING VALUES (37, 109, '2024-07-31 07:30:00');
+INSERT INTO TRAINING VALUES (38, 110, '2024-08-01 11:00:00');
+INSERT INTO TRAINING VALUES (39, 111, '2024-08-08 16:00:00');
+INSERT INTO TRAINING VALUES (40, 112, '2024-08-09 16:00:00');
+INSERT INTO TRAINING VALUES (41, 113, '2024-08-05 09:30:00');
+INSERT INTO TRAINING VALUES (42, 114, '2024-07-29 13:25:00');
+INSERT INTO TRAINING VALUES (43, 115, '2024-07-31 20:00:00');
+INSERT INTO TRAINING VALUES (44, 116, '2024-08-04 17:00:00');
+INSERT INTO TRAINING VALUES (45, 117, '2024-07-31 09:00:00');
+INSERT INTO TRAINING VALUES (46, 118, '2024-08-06 09:00:00');
+INSERT INTO TRAINING VALUES (47, 119, '2024-08-07 07:30:00');
+INSERT INTO TRAINING VALUES (48, 120, '2024-08-07 11:00:00');
+
+-- Participation Insight
+SELECT Sport_Name "Sport", COUNT(DISTINCT P.AthleteID) AS "Number of Athletes"
+FROM SPORT S 
+LEFT JOIN EVENT E
+ON S.Sport_Code = E.Sport_Code
+LEFT JOIN PARTICIPATION P
+ON E.Event_Code = P.Event_Code
+GROUP BY Sport_Name
+ORDER BY COUNT(DISTINCT P.AthleteID) DESC;
+
+-- Room Insights
+SELECT T.TeamID "Team", COUNT(DISTINCT A.AthleteID) AS "Number of People", R.Room_Number "Room No.", Need
+FROM TEAM T
+LEFT JOIN ATHLETE A
+ON T.TeamID = A.TeamID
+LEFT JOIN ROOM R 
+ON A.Room_Number = R.Room_Number
+GROUP BY T.TeamID
+HAVING Need LIKE '%area%'
+ORDER BY COUNT(DISTINCT A.AthleteID) DESC; 
+
+SELECT Athlete_Name "Athlete Name", Nationality, Age, Sport_Name "Sport"
+FROM ATHLETE A
+LEFT JOIN PARTICIPATION P ON A.AthleteID = P.AthleteID
+LEFT JOIN EVENT E ON E.Event_Code = P.Event_Code
+LEFT JOIN SPORT S ON S.Sport_Code = E.Sport_Code
+WHERE TeamID IS NULL
+	AND Nationality = 'United States'
+    AND Age BETWEEN 18 AND 24
+ORDER BY Sport_Name;
+
+-- Venue Insights
+SELECT Venue_Name "Venue Name", COUNT(DISTINCT Event_Code) AS "Number of Events"
+FROM VENUE V 
+LEFT JOIN EVENT E ON E.VenueID = V.VenueID
+GROUP BY Venue_Name
+HAVING COUNT(DISTINCT Event_Code) >= 3
+ORDER BY COUNT(DISTINCT Event_Code) DESC;
+
+SELECT Venue_Name "Venue Name", Date_Time "Event Date & Time", Sport_Name "Sport"
+FROM EVENT E 
+LEFT JOIN VENUE V ON E.VenueID = V.VenueID
+LEFT JOIN SPORT S ON E.Sport_Code = S.Sport_Code
+WHERE Venue_Name = 'South Paris Arena'
+ORDER BY Date_Time;
+
+-- Volunteer Insights
+SELECT Event_Name "Event", COUNT(DISTINCT V.VolunteerID) AS "Number of Volunteers", Sport_Name "Sport"
+FROM EVENT E
+LEFT JOIN SPORT S ON E.Sport_Code = S.Sport_Code
+LEFT JOIN TRAINING T ON E.Event_Code = T.Event_Code
+LEFT JOIN VOLUNTEER V ON T.VolunteerID = V.VolunteerID
+GROUP BY Event_Name
+ORDER BY COUNT(DISTINCT V.VolunteerID) DESC;
+
+SELECT Volunteer_Name "Volunteer Name", CONCAT(DAY(Training_DateTime), '-', MONTH(Training_DateTime)) AS "Training Date", 
+TIME_FORMAT(Training_DateTime, '%H:%i') AS "Training Time", Venue_Name "Venue Name", Venue_Location "Venue Location", Role
+FROM VOLUNTEER V
+LEFT JOIN TRAINING T ON V.VolunteerID = T.VolunteerID
+LEFT JOIN EVENT E ON T.Event_Code = E.Event_Code
+LEFT JOIN VENUE N ON E.VenueID = N.VenueID
+WHERE DAY(Training_DateTime) = 26
+	AND MONTH(Training_DateTime) = 7
+    AND TIME(Training_DateTime) BETWEEN '09:00:00' AND '10:00:00'
+ORDER BY Volunteer_Name;
+
+-- Equipment Insights
+SELECT Sport_Name "Sport", Equipment_Name "Equipment", Inventory_Level "Inventory Level", Venue_Name "Distribution", Maintenance_schedule "Maintenance schedule"
+FROM SPORT S
+LEFT JOIN EQUIPMENT E ON S.Sport_Code = E.Sport_Code
+LEFT JOIN VENUE V ON E.Distribution = V.VenueID
+WHERE Inventory_Level >= 100;
